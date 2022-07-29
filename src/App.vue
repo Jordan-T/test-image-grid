@@ -10,7 +10,7 @@ const generateImages = (count: number, background?: string = 'CCC') => {
   const images: string[] = [];
   for (let i = 0; i < count; i++) {
     images.push(
-      `https://via.placeholder.com/640x480/${background}?text=${i + 1}`
+      `https://via.placeholder.com/640x640/${background}?text=${i + 1}`
     );
   }
 
