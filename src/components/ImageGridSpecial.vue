@@ -16,7 +16,7 @@ type Image = string;
 const props = defineProps<{
   images: Image[];
   /** @values 1, 2, 3, 4 */
-  type?: string;
+  type: string;
 }>();
 </script>
 
@@ -55,6 +55,14 @@ const props = defineProps<{
 
   &--2 {
     grid-template-areas: 'img2 img3' 'img4 img5' 'img1 img1';
+  }
+
+  &--3 {
+    grid-template-areas: 'img1 img2' 'img1 img3' 'img4 img4';
+  }
+
+  &--4 {
+    grid-template-areas: 'img1 img1' 'img2 img2' 'img2 img2';
   }
 }
 </style>

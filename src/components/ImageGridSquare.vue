@@ -16,7 +16,7 @@ type Image = string;
 const props = defineProps<{
   images: Image[];
   /** @values 1, 2, 3, 4 */
-  type?: string;
+  type: string;
 }>();
 </script>
 

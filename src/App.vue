@@ -1,36 +1,54 @@
 <script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
+import { ref, watch } from 'vue';
+import imageUrls from './imageUrls.ts';
 import ImageGrid from './components/ImageGrid.vue';
 import ImageGridSquare from './components/ImageGridSquare.vue';
 import ImageGridLine from './components/ImageGridLine.vue';
 import ImageGridSpecial from './components/ImageGridSpecial.vue';
 
+let currentImageIndex = 0;
+
+const useImages = ref(true);
 const generateImages = (count: number, background?: string = 'CCC') => {
   const images: string[] = [];
   for (let i = 0; i < count; i++) {
-    images.push(
-      `https://via.placeholder.com/640x640/${background}?text=${i + 1}`
-    );
+    if (useImages.value) {
+      const imageUrl = imageUrls[currentImageIndex % imageUrls.length];
+      currentImageIndex += 1;
+      images.push(imageUrl);
+    } else {
+      images.push(
+        `https://via.placeholder.com/640x640/${background}?text=${i + 1}`
+      );
+    }
   }
 
   return images;
 };
+
+watch(useImages, () => {
+  currentImageIndex = 0;
+});
 </script>
 
 <template>
   <div class="p-default">
     <h1>Image grid</h1>
 
+    <label>
+      <input type="checkbox" v-model="useImages" />
+      Utiliser des images
+    </label>
+
     <h2>Final example</h2>
     <ImageGrid class="p-default__grid">
       <ImageGridSquare :images="generateImages(1)" type="1" />
-      <ImageGridSquare :images="generateImages(3, 'FCC')" type="1" />
-      <ImageGridSpecial :images="generateImages(5, 'CFC')" type="1" />
-      <ImageGridSpecial :images="generateImages(5, 'CCF')" type="2" />
+      <ImageGridSquare :images="generateImages(3, 'FCC')" type="4" />
       <ImageGridLine :images="generateImages(3, 'FCF')" />
-      <ImageGridSquare :images="generateImages(3, 'FFC')" type="1" />
-      <ImageGridSquare :images="generateImages(3, 'CFF')" type="2" />
+      <ImageGridSpecial :images="generateImages(4, 'CFC')" type="3" />
+      <ImageGridSpecial :images="generateImages(2, 'CCF')" type="4" />
+      <ImageGridSquare :images="generateImages(1, 'FFC')" type="1" />
+      <ImageGridSquare :images="generateImages(2, 'CFF')" type="1" />
     </ImageGrid>
 
     <h2>Square block</h2>
@@ -68,6 +86,8 @@ const generateImages = (count: number, background?: string = 'CCC') => {
     <ImageGrid class="p-default__grid">
       <ImageGridSpecial :images="generateImages(5)" type="1" />
       <ImageGridSpecial :images="generateImages(5)" type="2" />
+      <ImageGridSpecial :images="generateImages(4)" type="3" />
+      <ImageGridSpecial :images="generateImages(2)" type="4" />
     </ImageGrid>
   </div>
 </template>
